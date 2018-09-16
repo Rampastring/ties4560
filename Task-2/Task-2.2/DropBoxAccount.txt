@@ -1,0 +1,12 @@
+DropBoxin käyttö todennäköisesti vaatii latauksen tietokoneelle.
+
+DropBox tunnuksen sähköpostina on käytetty https://temp-mail.org/fi-sivuston väliaikaistunnusta.
+Osoite on ties4560@bit-degree.com
+
+DropBoxin käyttäjätunnukset ovat seuraavat:
+
+Käyttäjätunnuksen nimi: TIES4560 Jyu
+Käyttäjätunnuksen salasana: DropBoxTask963
+
+Sovelluksen tietoja voi muokata osoitteessa https://www.dropbox.com/developers/apps
+
