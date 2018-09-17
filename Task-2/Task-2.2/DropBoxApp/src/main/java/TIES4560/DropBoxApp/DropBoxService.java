@@ -66,12 +66,6 @@ public class DropBoxService {
 			}
 			in.close();
 			String queryResult = response.toString();
-			// InputStream response = conn.getInputStream();
-			// Scanner s = new Scanner(response).useDelimiter("\\A");
-			// String result = s.hasNext() ? s.next() : "";
-			// JSONObject object = new JSONObject(result);
-			// setAccessToken(object.get("access_token"));
-			// response.close();
 			conn.disconnect();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -88,28 +82,11 @@ public class DropBoxService {
 		this.token = String.valueOf(object);
 	}
 
-	// public String retrieveAuthorizationUri() throws
-	// UnsupportedEncodingException, URISyntaxException {
-	// String redirectUri = "http://localhost:8085/DropBoxApp";
-	// URI uri = new URI("https://www.dropbox.com/oauth2/authorize");
-	// StringBuilder request = new StringBuilder(uri.toString());
-	// request.append("?client_id=" + URLEncoder.encode("s9qjjppmafv0sbo",
-	// "UTF-8")); // app
-	// // key
-	// request.append("&response_type=" + URLEncoder.encode("code", "UTF-8"));
-	// // retrieves
-	// // code
-	// request.append("&redirect_uri=" + URLEncoder.encode(redirectUri,
-	// "UTF-8")); // localhost,
-	// // change
-	// // according
-	// // to
-	// // local
-	// // IP
-	//
-	// return request.toString();
-	// }
-
+	/**
+	 * @return url user should be directed to in order to achieve access token
+	 * @throws UnsupportedEncodingException if UTF-8 not supported
+	 * @throws URISyntaxException sth wrong with URI
+	 */
 	public String retrieveAccessTokenUri() throws UnsupportedEncodingException, URISyntaxException {
 		String redirectUri = "http://localhost:8085/DropBoxApp";
 		URI uri = new URI("https://www.dropbox.com/oauth2/authorize");
@@ -136,9 +113,14 @@ public class DropBoxService {
 		this.token = token;
 	}
 
+	/**
+	 * Sends given file to DropBox
+	 * @param f file
+	 * @return JSON 
+	 */
 	public String postFileToDropBox(File f) {
 		try {
-			String content = "{\"path\": \"" + "Apps\\TIES4560_DB_App" + "\"}";
+			String content = "{\"path\": \"" + "/TIES4560_DB_App/Text_files/" + f.getName() + "\",\"mode\":\"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}";
 			HttpURLConnection conn = (HttpURLConnection) new URL("https://content.dropboxapi.com/2/files/upload")
 					.openConnection();
 			conn.setRequestProperty("Content-Type", "application/octet-stream");
@@ -155,10 +137,13 @@ public class DropBoxService {
 
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
+			String input;
+
 			StringBuilder output = new StringBuilder();
-	        while (br.readLine() != null) {
-	                output.append(br.readLine());
+	        while ((input = br.readLine()) != null) {
+	                output.append(input);
 	        }
+			
 
 	        conn.disconnect();
 	        return output.toString();
@@ -170,10 +155,15 @@ public class DropBoxService {
 		return "";
 	}
 
+	/**
+	 * Creates new folder at given path
+	 * @param folderPath path for the new folder
+	 * @return JSON
+	 */
 	public String createNewFolder(String folderPath) {
 		try {
-			String parameters = "{\"path\": \"" + folderPath + "\"}";
-			HttpURLConnection conn = (HttpURLConnection) new URL("https://api.dropboxapi.com/2/files/create_folder")
+			String parameters = "{\"path\": \"" + folderPath + "\",\"autorename\": false}";
+			HttpURLConnection conn = (HttpURLConnection) new URL("https://api.dropboxapi.com/2/files/create_folder_v2")
 					.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/json");    
@@ -184,11 +174,13 @@ public class DropBoxService {
 			outputStreamWriter.flush();
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
-	        StringBuilder output = new StringBuilder();
-	        while (br.readLine() != null) {
-	                output.append(br.readLine());
-	        }
+			String input;
 
+			StringBuilder output = new StringBuilder();
+	        while ((input = br.readLine()) != null) {
+	                output.append(input);
+	        }
+			
 	        conn.disconnect();
 	        return output.toString();
 		}  catch (Exception e ) {
@@ -198,6 +190,9 @@ public class DropBoxService {
 		return "";
 	}
 	
+	/**
+	 * @return user account information
+	 */
 	public String getAccountInformation() {
 		try {
 			String content = "{\"account_id\": \"" + "dbid:AAA7QstdqTkMywlVKYQ6vdSuGnVKgOrdPkQ" + "\"}";
@@ -214,10 +209,12 @@ public class DropBoxService {
 			outputStreamWriter.flush();
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+			
+			String input;
 
 			StringBuilder output = new StringBuilder();
-	        while (br.readLine() != null) {
-	                output.append(br.readLine());
+	        while ((input = br.readLine()) != null) {
+	                output.append(input);
 	        }
 			
 			return output.toString();
