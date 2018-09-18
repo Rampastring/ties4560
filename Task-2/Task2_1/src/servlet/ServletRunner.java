@@ -13,11 +13,11 @@ public class ServletRunner {
 		// add all servlet to use to the handler, the second argument is the path (e.g.
 		// http://localhost:8080/searchPublication)
 		// TODO: Add servlet mappings to classes
-		handler.addServletWithMapping(MyServlet.class, "/myservlet");
+		handler.addServletWithMapping(NameGeneratorServlet.class, "/NameGeneratorServlet");
 //		handler.addServletWithMapping(UserProfile.class, "/getProfile");
 //		handler.addServletWithMapping(CreateUserProfile.class, "/createProfile");
 		// Create a new Server, add the handler to it and start
-		Server server = new Server(8080);
+		Server server = new Server(1234);
 		try {
 			server.setHandler(handler);
 			server.start();
