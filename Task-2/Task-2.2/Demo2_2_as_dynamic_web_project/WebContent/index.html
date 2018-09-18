@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script language="JavaScript" src="myAJAXlib.js">
+</script>
+<SCRIPT language="JavaScript" SRC="myjs.js">
+</SCRIPT>
+
+
+</head>
+<body> 
+
+<h1><b>Dropbox app</b></h1>
+
+<input type="button" id="createAccessButton" value="Create access token"  onclick="create_access_token();" style="width:200">
+<br>
+<input type="button" id="getTokenButton" value="Get access token"  onclick="get_access_token();" style="width:200">
+
+<div id="created_token">
+</div>
+
+<input type="button" id="userInfoButton" value="Show user info"  onclick="show_user_info();" style="width:200">
+
+<div id="user_info">
+</div>
+
+<input type="button" id="uploadButton" value="Upload file"  onclick="upload_file();" style="width:200">
+
+<input type="text" id="file_path" value="" style="width:500">
+
+<div id="uploaded_file_info">
+</div>
+
+<input type="button" id="folderButton" value="Create new folder"  onclick="create_new_folder();" style="width:200">
+
+<input type="text" id="folder_path" value="" style="width:500">
+
+<div id="folder_info">
+</div>
+
+</body>
+</html>
