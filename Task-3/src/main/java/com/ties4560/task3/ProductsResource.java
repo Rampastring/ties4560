@@ -6,24 +6,20 @@ package com.ties4560.task3;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import beans.Order;
 import beans.Product;
 
 /**
- * @author Janita, Rami
+ * @author Janita, Rami, Jaro
  * @version 25.9.2018
  *
  */
@@ -68,7 +64,7 @@ public class ProductsResource {
 			}
 		}
 		
-		return Response.status(Status.NOT_FOUND).build();
+		throw new DataNotFoundException("Product with id "+id+" was not found.");
 	}
 	
 	@POST
@@ -77,6 +73,5 @@ public class ProductsResource {
 	public Response createProduct(Product product) {
 		productList.add(product);
 		return Response.status(Status.CREATED).entity(product).build();
-		// return order;
 	}
 }
