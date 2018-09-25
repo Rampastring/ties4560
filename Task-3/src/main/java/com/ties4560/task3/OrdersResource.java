@@ -11,6 +11,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -21,8 +22,8 @@ import beans.Order;
 import beans.OrderRow;
 
 /**
- * @author Janita, Jere
- * @version 23.9.2018
+ * @author Janita, Jere, Rami
+ * @version 25.9.2018
  *
  */
 @Path("orders")
@@ -68,6 +69,17 @@ public class OrdersResource {
 		order.setRows(orderRows);
 		
 		return order;
+	}
+	
+	/**
+	 * @param id orderId
+	 * @return order by given id
+	 */
+	@DELETE
+	@Path("/{orderId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Order deleteOrder(@PathParam("orderId") int id) {		
+		return orderMap.remove(id);
 	}
 
 }
