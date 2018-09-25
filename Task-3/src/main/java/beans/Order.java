@@ -3,6 +3,7 @@
  */
 package beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,6 +18,7 @@ public class Order {
 	
 	private int orderId;
 	private List<OrderRow> rows;
+	private List<Link> links = new ArrayList<>();
 	
 	/**
 	 * empty constructor
@@ -32,6 +34,13 @@ public class Order {
 		this.rows = orderRows;
 	}
 
+	public void addLink(String url, String rel) {
+		Link link = new Link();
+		link.setLink(url);
+		link.setRel(rel);
+		links.add(link);
+	}
+	
 	/**
 	 * @return the orderId
 	 */
@@ -58,6 +67,14 @@ public class Order {
 	 */
 	public void setRows(List<OrderRow> rows) {
 		this.rows = rows;
+	}
+	
+	public List<Link> getLinks() {
+		return links;
+	}
+	
+	public void setLinks(List<Link> links) {
+		this.links = links;
 	}
 
 }

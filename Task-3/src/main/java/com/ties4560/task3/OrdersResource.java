@@ -15,9 +15,11 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 
 import beans.Order;
 import beans.OrderRow;
@@ -39,7 +41,7 @@ public class OrdersResource {
 	 */
 	@GET
 	@Path("/{orderId}")
-	// @Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getOrder(@PathParam("orderId") int id) {		
 		Order order = orderMap.get(id);
 		if (order == null ) {
@@ -55,11 +57,18 @@ public class OrdersResource {
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	// @Produces(MediaType.APPLICATION_JSON)
-	public Response createOrder(Order order) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response createOrder(Order order, @Context UriInfo uriInfo) {
 		orderMap.put(order.getOrderId(), order);
+		
+		String uri = uriInfo.getBaseUriBuilder()
+			.path(OrdersResource.class)
+			.path(Long.toString(order.getOrderId()))
+			.build()
+			.toString();
+		
+		order.addLink(uri, "self");
 		return Response.status(Status.CREATED).entity(order).build();
-		// return order;
 	}
 	
 	/**
