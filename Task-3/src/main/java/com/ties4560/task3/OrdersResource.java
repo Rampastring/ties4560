@@ -17,6 +17,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import beans.Order;
 import beans.OrderRow;
@@ -38,21 +39,27 @@ public class OrdersResource {
 	 */
 	@GET
 	@Path("/{orderId}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Order getOrder(@PathParam("orderId") int id) {		
-		return orderMap.get(id);
+	// @Produces(MediaType.APPLICATION_JSON)
+	public Response getOrder(@PathParam("orderId") int id) {		
+		Order order = orderMap.get(id);
+		if (order == null ) {
+			return Response.status(Status.NOT_FOUND).build();
+		}
+		
+		return Response.status(Status.CREATED).entity(order).build();
 	}
 	
 	/**
 	 * @param order order to create
-	 * @return created order
+	 * @return response
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Order createOrder(Order order) {
+	// @Produces(MediaType.APPLICATION_JSON)
+	public Response createOrder(Order order) {
 		orderMap.put(order.getOrderId(), order);
-		return order;
+		return Response.status(Status.CREATED).entity(order).build();
+		// return order;
 	}
 	
 	/**
@@ -63,23 +70,26 @@ public class OrdersResource {
 	@PUT
 	@Path("/{orderId}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Order updateOrder(@PathParam("orderId") int id, List<OrderRow> orderRows) {
+	//@Produces(MediaType.APPLICATION_JSON)
+	public Response updateOrder(@PathParam("orderId") int id, List<OrderRow> orderRows) {
 		Order order = orderMap.get(id);
 		order.setRows(orderRows);
-		
-		return order;
+		return Response.status(Status.OK).entity(order).build();
 	}
 	
 	/**
+	 * Deletes an order.
 	 * @param id orderId
-	 * @return order by given id
+	 * @return deleted order, or 404 if an order with the given id is not found
 	 */
 	@DELETE
 	@Path("/{orderId}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Order deleteOrder(@PathParam("orderId") int id) {		
-		return orderMap.remove(id);
+	//@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteOrder(@PathParam("orderId") int id) {
+		Order order = orderMap.remove(id);
+		if (order == null)
+			return Response.status(Status.NOT_FOUND).build();
+		return Response.status(Status.CREATED).entity(order).build();
 	}
 
 }
