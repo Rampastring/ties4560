@@ -41,7 +41,6 @@ public class OrdersResource {
 	 */
 	@GET
 	@Path("/{orderId}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response getOrder(@PathParam("orderId") int id) {		
 		Order order = orderMap.get(id);
 		if (order == null ) {
@@ -57,7 +56,6 @@ public class OrdersResource {
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response createOrder(Order order, @Context UriInfo uriInfo) {
 		orderMap.put(order.getOrderId(), order);
 		
@@ -79,7 +77,6 @@ public class OrdersResource {
 	@PUT
 	@Path("/{orderId}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	//@Produces(MediaType.APPLICATION_JSON)
 	public Response updateOrder(@PathParam("orderId") int id, List<OrderRow> orderRows) {
 		Order order = orderMap.get(id);
 		order.setRows(orderRows);
@@ -93,7 +90,6 @@ public class OrdersResource {
 	 */
 	@DELETE
 	@Path("/{orderId}")
-	//@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteOrder(@PathParam("orderId") int id) {
 		Order order = orderMap.remove(id);
 		if (order == null)
