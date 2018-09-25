@@ -18,6 +18,11 @@ public class Product {
 	private String category;
 	
 	/**
+	 * empty constructor
+	 */
+	public Product() {}
+	
+	/**
 	 * @param id product id
 	 * @param productName name of the product
 	 * @param productCategory category that product belongs to
