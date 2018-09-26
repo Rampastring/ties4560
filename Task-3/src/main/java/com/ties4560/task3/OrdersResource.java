@@ -46,7 +46,7 @@ public class OrdersResource {
 			throw new DataNotFoundException("Order with id "+id+" was not found. Please check the id or add an order with such id to the database.");
 		}
 		
-		return Response.status(Status.CREATED).entity(order).build();
+		return Response.status(Status.OK).entity(order).build();
 	}
 	
 	/**
