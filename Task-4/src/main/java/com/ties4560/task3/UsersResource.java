@@ -31,12 +31,10 @@ import beans.Credential;
 @PermitAll
 public class UsersResource {
 	
-	private HashMap<String, Credential> credentials = new HashMap<>();
+	private static HashMap<String, Credential> credentials = new HashMap<String, Credential>();
 	
 	@Path("/authenticate")
 	@POST
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
 	public Response authenticateUser(String token) {
 		if (credentials.get(token) != null) {
 			Response.status(Status.OK).entity(credentials.get(token)).build();
@@ -45,8 +43,6 @@ public class UsersResource {
 	}
 	
 	@POST
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createUser(Credential newCredential) {
 		String token = createToken(newCredential);
 		if (!token.isEmpty() || token != null) {
@@ -74,15 +70,7 @@ public class UsersResource {
 				return cred;
 			}
 		}
-		return null;
+		throw new DataNotFoundException("User could not be found.");
 	}
-	
-
-//	public static class UserStorage {
-//		
-//		private static void addNewUser(Credential newCredential) {
-//			
-//		}
-//	}
 
 }
