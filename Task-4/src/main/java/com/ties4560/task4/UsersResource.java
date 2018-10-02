@@ -9,6 +9,7 @@ import java.util.UUID;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -64,13 +65,26 @@ public class UsersResource {
 	@GET
 	@Path("/{username}")
 	@RolesAllowed("admin")
-	public Credential getUser(@PathParam("username") String username) {
-		for (Credential cred : credentials.values()) {
-			if (cred.getName().equals(username)) {
-				return cred;
-			}
+	public Response getUser(@PathParam("username") String username) {
+		Credential cred = credentials.get(username);
+		
+		if (cred == null ) {
+			throw new DataNotFoundException("User with name "+ username +" was not found.");
 		}
-		throw new DataNotFoundException("User could not be found.");
+		
+		return Response.status(Status.OK).entity(cred).build();
+	}
+	
+	@DELETE
+	@Path("/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteUser(@PathParam("username") String username) {
+		Credential cred  = credentials.remove(username);
+		
+		if (cred == null)
+			throw new DataNotFoundException("User with name "+ username +" was not found. Cannot delete the order.");
+		
+		return Response.status(Status.CREATED).entity(cred).build();
 	}
 
 }
