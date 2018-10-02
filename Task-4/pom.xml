@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ties4560</groupId>
-    <artifactId>task3</artifactId>
+    <artifactId>task4</artifactId>
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>task3</name>
+    <name>task4</name>
 
     <build>
-        <finalName>task3</finalName>
+        <finalName>task4</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

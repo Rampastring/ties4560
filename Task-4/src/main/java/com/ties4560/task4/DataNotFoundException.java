@@ -1,4 +1,4 @@
-package com.ties4560.task3;
+package com.ties4560.task4;
 
 /**
  * @author Jaro
