@@ -78,12 +78,14 @@ public class UsersResource {
 	@Path("/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteUser(@PathParam("username") String username) {
-		Credential cred  = credentials.remove(username);
+		for (Credential cred : credentials.values()) {
+			if (cred.getName().equals(username)) {
+				credentials.values().remove(cred);
+				return Response.status(Status.OK).entity(cred).build();
+			}
+		}
 		
-		if (cred == null)
-			throw new DataNotFoundException("User with name "+ username +" was not found. Cannot delete the order.");
-		
-		return Response.status(Status.CREATED).entity(cred).build();
+		throw new DataNotFoundException("User with name "+ username +" was not found. Cannot delete the user.");
 	}
 
 }
