@@ -45,7 +45,7 @@ public class UsersResource {
 	@POST
 	public Response createUser(Credential newCredential) {
 		String token = createToken(newCredential);
-		if (!token.isEmpty() || token != null) {
+		if (token != null && !token.isEmpty()) {
 			credentials.put(token, newCredential);
 		} else {
 			return Response.status(Status.NOT_ACCEPTABLE).entity(newCredential).build();
