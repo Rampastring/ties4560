@@ -66,13 +66,12 @@ public class UsersResource {
 	@Path("/{username}")
 	@RolesAllowed("admin")
 	public Response getUser(@PathParam("username") String username) {
-		Credential cred = credentials.get(username);
-		
-		if (cred == null ) {
-			throw new DataNotFoundException("User with name "+ username +" was not found.");
+		for (Credential cred : credentials.values()) {
+			if (cred.getName().equals(username)) {
+				return Response.status(Status.OK).entity(cred).build();
+			}
 		}
-		
-		return Response.status(Status.OK).entity(cred).build();
+		throw new DataNotFoundException("User with name "+ username +" was not found.");
 	}
 	
 	@DELETE
