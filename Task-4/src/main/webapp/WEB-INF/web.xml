@@ -72,6 +72,11 @@
     <auth-method>DIGEST</auth-method>
     <realm-name>UserDatabase</realm-name>
   </login-config>
+<!--   BASIC not in use -->
+<!--   <login-config> -->
+<!--     <auth-method>BASIC</auth-method> -->
+<!--     <realm-name>UserDatabase</realm-name> -->
+<!--   </login-config> -->
   <security-role>
     <role-name>admin</role-name>
   </security-role>
