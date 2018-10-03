@@ -6,6 +6,7 @@ package com.ties4560.task4;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -30,10 +31,18 @@ import beans.OrderRow;
  *
  */
 @Path("orders")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 @Singleton
 public class OrdersResource {
 	
 	private HashMap<Integer, Order> orderMap = new HashMap<Integer, Order>();
+	
+	@GET
+	@RolesAllowed("admin")
+	public Response getOrders() {
+		return Response.status(Status.OK).entity(orderMap.values()).build();
+	}
 	
 	/**
 	 * @param id orderId
@@ -41,7 +50,6 @@ public class OrdersResource {
 	 */
 	@GET
 	@Path("/{orderId}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response getOrder(@PathParam("orderId") int id) {		
 		Order order = orderMap.get(id);
 		if (order == null ) {
@@ -57,8 +65,6 @@ public class OrdersResource {
 	 * @return response
 	 */
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response createOrder(Order order, @Context UriInfo uriInfo) {
 		int id = order.getOrderId();
 		
@@ -84,8 +90,6 @@ public class OrdersResource {
 	 */
 	@PUT
 	@Path("/{orderId}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateOrder(@PathParam("orderId") int id, List<OrderRow> orderRows) {
 		Order order = orderMap.get(id);
 		if (order == null)
@@ -102,7 +106,6 @@ public class OrdersResource {
 	 */
 	@DELETE
 	@Path("/{orderId}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteOrder(@PathParam("orderId") int id) {
 		Order order = orderMap.remove(id);
 		if (order == null)
