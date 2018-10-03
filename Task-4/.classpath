@@ -24,6 +24,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/Utility/apache-tomcat-9.0.11-windows-x64/apache-tomcat-9.0.11/lib/catalina.jar"/>
+	<classpathentry kind="lib" path="lib/catalina.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

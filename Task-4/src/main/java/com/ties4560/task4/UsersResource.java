@@ -20,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.catalina.Role;
 import org.apache.catalina.User;
 import org.apache.catalina.UserDatabase;
 
@@ -53,7 +54,13 @@ public class UsersResource {
 //			credentials.put(token, newCredential);
 			try {
 				UserDatabase ud = (UserDatabase) new InitialContext().lookup("java:comp/env/UserDatabase");
-				ud.createUser(newCredential.getName(), newCredential.getPassword(), token);
+				User user = ud.createUser(newCredential.getName(), newCredential.getPassword(), token);
+				Iterator<Role> roles = ud.getRoles();
+				while (roles.hasNext()) {
+					Role role = (Role) roles.next();
+					if (role.getRolename().equals("user"))
+						user.addRole(role);						
+				}
 				ud.save();
 			} catch (Exception e) {
 				e.printStackTrace();
