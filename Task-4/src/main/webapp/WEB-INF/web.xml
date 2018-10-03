@@ -14,7 +14,7 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>AdminConstraint</web-resource-name>
-      <url-pattern>/users/*</url-pattern>
+      <url-pattern>/webapi/users/*</url-pattern>
       <http-method>GET</http-method>
       <http-method>PUT</http-method>
       <http-method>POST</http-method>
@@ -27,7 +27,7 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>UserConstraint</web-resource-name>
-      <url-pattern>/users/*</url-pattern>
+      <url-pattern>/webapi/users/*</url-pattern>
       <http-method>GET</http-method>
       <http-method>PUT</http-method>
     </web-resource-collection>
@@ -38,7 +38,7 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>DeleteOrder</web-resource-name>
-      <url-pattern>/orders/*</url-pattern>
+      <url-pattern>/webapi/orders/*</url-pattern>
       <http-method>DELETE</http-method>
     </web-resource-collection>
     <auth-constraint>
@@ -48,7 +48,7 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>UpdateOrder</web-resource-name>
-      <url-pattern>/orders/*</url-pattern>
+      <url-pattern>/webapi/orders/*</url-pattern>
       <http-method>GET</http-method>
       <http-method>PUT</http-method>
       <http-method>POST</http-method>
@@ -61,7 +61,7 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>AddProduct</web-resource-name>
-      <url-pattern>/products/*</url-pattern>
+      <url-pattern>/webapi/products/*</url-pattern>
       <http-method>POST</http-method>
     </web-resource-collection>
     <auth-constraint>
