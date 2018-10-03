@@ -11,6 +11,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -24,20 +25,21 @@ import beans.Product;
  *
  */
 @Path("products")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class ProductsResource {
 	
-	private List<Product> productList = Arrays.asList(new Product(1, "Oxford University Press Solo Time For Violin Book 1", "Sheet music"), 
+	private List<Product> productList = new ArrayList<Product>(Arrays.asList(new Product(1, "Oxford University Press Solo Time For Violin Book 1", "Sheet music"), 
 			new Product(2, "Squier Classic Vibe Strat MN 2TS", "Guitar"),
 			new Product(3, "Epiphone Les Paul 100 Ebony", "Guitar"),
 			new Product(4, "Yamaha B3EPE Upright piano, black", "Piano"),
-			new Product(5, "GROTRIAN-STEINWEG GS132PE Upright piano, white", "Piano"));
+			new Product(5, "GROTRIAN-STEINWEG GS132PE Upright piano, white", "Piano")));
 	
 	/**
 	 * @param category name of the category
 	 * @return list of products in the music store
 	 */
 	@GET
-	//@Produces(MediaType.TEXT_PLAIN)
 	public Response getProducts(@QueryParam("category") String category) {
 		List<Product> returnedList;
 		if (category == null || category.equals("")) {
@@ -61,7 +63,6 @@ public class ProductsResource {
 	 */
 	@GET
 	@Path("/{productId}")
-	//@Produces(MediaType.APPLICATION_JSON)
 	public Response getProduct(@PathParam("productId") int id) {
 		for (Product product : productList) {
 			if (product.getProductId() == id) {
@@ -77,7 +78,6 @@ public class ProductsResource {
 	 * @return response
 	 */
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	// @Produces(MediaType.APPLICATION_JSON)
 	public Response createProduct(Product product) {
 		productList.add(product);
